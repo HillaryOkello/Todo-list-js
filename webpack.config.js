@@ -5,6 +5,18 @@ module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    output: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+    ],
   },
 };
