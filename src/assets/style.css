@@ -1,0 +1,101 @@
+.nav-bar {
+  flex: 1;
+  max-width: 300px;
+  padding: 2rem;
+  background-color: rgb(111, 189, 252);
+  height: 88vh;
+}
+
+.nav.active {
+  display: block;
+}
+
+.button-default-project {
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: rgb(111, 189, 252);
+  text-align: left;
+  margin: 5px;
+}
+
+.fa-inbox {
+  margin-right: 0.6rem;
+}
+
+.button-project.active,
+.button-default-project.active {
+  font-weight: bold;
+  background-color: #ccc;
+}
+
+.button-project:hover,
+.button-default-project:hover,
+.button-add-project:hover {
+  background-color: #fff;
+}
+
+button-add-project {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+  margin-left: 0.2rem;
+  background-color: var(--secondary-light);
+  text-align: left;
+}
+
+.button-add-project.active {
+  display: none;
+}
+
+.button-project.active,
+.button-default-project.active {
+  font-weight: bold;
+  background-color: #ccc;
+}
+
+.button-project:hover .right-project-panel {
+  visibility: visible;
+}
+
+.fa-times {
+  margin-right: 0;
+}
+
+.btn {
+  cursor: pointer;
+  background: 0;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.btn.create {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-right: 0.25em;
+  transition: opacity 250ms ease-in;
+}
+
+.new {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  border-bottom: 1px solid currentColor;
+  font-size: inherit;
+  outline: none;
+  padding: 0.25em;
+  transition: border-bottom 150ms ease-in;
+  order: 2;
+}
+
+.project-preview {
+  flex: 5;
+  max-width: 900px;
+  padding: 2rem 4rem;
+}
+
+.project-preview h1 {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}

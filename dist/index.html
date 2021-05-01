@@ -7,7 +7,7 @@
 <meta name="Description" content="Enter your description here"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="../src/assets/style.css">
 <title>Todo List
 </title>
 </head>
@@ -19,6 +19,44 @@
         Todo
       </h1>
     </nav>
+
+    <main class="page-content d-flex">
+      <nav class="nav-bar" id="nav">
+        <!-- Default projects -->
+        <div class="default-projects-list">
+          <button class="btn button-default-project p-1 m-2" id="button-all-projects">
+            <i class="fas fa-inbox"></i>
+            All Tasks
+          </button>
+          <button class="btn button-default-project p-1 m-2" id="button-today-projects">
+            <i class="fas fa-calendar-day"></i>
+            Today
+          </button>
+          <button class="btn button-default-project p-1 m-2" id="button-week-projects">
+            <i class="fas fa-calendar-week"></i>
+            This week
+          </button>
+        </div>
+        <!-- User projects -->
+        <h1 class="projects-title p-2">Projects</h1>
+        <div class="projects-list" id="projects-list">
+          <form action="" data-new-project-form class="d-flex">
+            <input 
+              type="text"
+              class="new list"
+              data-new-project-input
+              placeholder="new project"
+              aria-label="new project"
+            />
+            <button class="btn create" aria-label="create new list">+</button>
+          </form>
+        </div>
+      </nav>
+
+      <!-- Todo -->
+      <div class="project-preview" id="project-preview">Hello</div>
+
+    </main>
   </div>
 
 <script src="main.js"></script>
@@ -27,3 +65,29 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+<!-- 
+<button class="btn button-add-project" id="button-add-project">
+  <i class="fas fa-plus"></i>
+  Add Project
+</button>
+<div class="add-project-popup" id="add-project-popup">
+  <input
+    class="input-add-project-popup"
+    id="input-add-project-popup"
+    type="text"
+  />
+  <div class="add-project-popup-buttons">
+    <button
+      class="button-add-project-popup"
+      id="button-add-project-popup"
+    >
+      Add
+    </button>
+    <button
+      class="button-cancel-project-popup"
+      id="button-cancel-project-popup"
+    >
+      Cancel
+    </button>
+  </div>
+</div> -->
