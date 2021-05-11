@@ -24,37 +24,36 @@
       <nav class="nav-bar" id="nav">
         <!-- Default projects -->
         <div class="default-projects-list">
-          <button class="btn button-default-project p-1 m-2" id="button-all-projects">
+          <button id="button-all-projects" class="btn-1 button-default-project p-1 m-2">
             <i class="fas fa-inbox"></i>
-            All Tasks
+            All
           </button>
-          <button class="btn button-default-project p-1 m-2" id="button-today-projects">
+          <button class="btn-1 button-default-project p-1 m-2" id="button-today-projects">
             <i class="fas fa-calendar-day"></i>
             Today
           </button>
-          <button class="btn button-default-project p-1 m-2" id="button-week-projects">
+          <button class="btn-1 button-default-project p-1 m-2" id="button-week-projects">
             <i class="fas fa-calendar-week"></i>
             This week
           </button>
         </div>
         <!-- User projects -->
         <h1 class="projects-title p-2">Projects</h1>
-        <div class="projects-list" id="projects-list">
-          <form action="" data-new-project-form class="d-flex">
-            <input 
-              type="text"
-              class="new list"
-              data-new-project-input
-              placeholder="new project"
-              aria-label="new project"
-            />
-            <button class="btn create" aria-label="create new list">+</button>
-          </form>
+        <div class="projects-list" id="projects-list" project-list>
         </div>
+        <form action="" data-new-project-form class="d-flex">
+          <input
+            id="input-add-project"
+            type="text"
+            class="new list"
+            placeholder="new project"
+          />
+          <button id="button-add-project" class="btn-1 create" aria-label="create new list">+</button>
+        </form>
       </nav>
 
       <!-- Todo -->
-      <div class="project-preview" id="project-preview">Hello</div>
+      <div class="project-preview" id="project-preview"></div>
 
     </main>
   </div>
@@ -65,29 +64,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-<!-- 
-<button class="btn button-add-project" id="button-add-project">
-  <i class="fas fa-plus"></i>
-  Add Project
-</button>
-<div class="add-project-popup" id="add-project-popup">
-  <input
-    class="input-add-project-popup"
-    id="input-add-project-popup"
-    type="text"
-  />
-  <div class="add-project-popup-buttons">
-    <button
-      class="button-add-project-popup"
-      id="button-add-project-popup"
-    >
-      Add
-    </button>
-    <button
-      class="button-cancel-project-popup"
-      id="button-cancel-project-popup"
-    >
-      Cancel
-    </button>
-  </div>
-</div> -->

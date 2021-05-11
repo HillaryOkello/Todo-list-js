@@ -30,22 +30,8 @@
 }
 
 .button-project:hover,
-.button-default-project:hover,
-.button-add-project:hover {
+.button-default-project:hover {
   background-color: #fff;
-}
-
-button-add-project {
-  display: block;
-  width: 100%;
-  margin-top: 1rem;
-  margin-left: 0.2rem;
-  background-color: var(--secondary-light);
-  text-align: left;
-}
-
-.button-add-project.active {
-  display: none;
 }
 
 .button-project.active,
@@ -62,15 +48,17 @@ button-add-project {
   margin-right: 0;
 }
 
-.btn {
+.btn-1 {
   cursor: pointer;
   background: 0;
   border: 0;
   padding: 0;
   color: inherit;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
 }
 
-.btn.create {
+.btn-1.create {
   font-size: 1.5rem;
   font-weight: 900;
   margin-right: 0.25em;
