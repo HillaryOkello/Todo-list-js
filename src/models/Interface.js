@@ -1,9 +1,9 @@
 import { format } from 'date-fns';
 import Project from './projects';
 import Task from './task';
-import Storage from './storage';export default class UI {
-  //
+import Storage from './storage';
 
+export default class UI {
   static loadHomepage() {
     UI.loadProjects();
     UI.initProjectButtons();
@@ -12,12 +12,10 @@ import Storage from './storage';export default class UI {
   }
 
   static loadProjects() {
-    let projectList = ''
-    console.log('loading projects')
+    let projectList = '';
     Storage.getTodoList()
       .getProjects()
       .forEach((project, index) => {
-        console.log('loaded! ', project)
         if (
           project.name !== 'All'
           && project.name !== 'Today'
@@ -26,7 +24,6 @@ import Storage from './storage';export default class UI {
           projectList = projectList.concat(UI.loadProject(project.name, index));
           UI.createProject(projectList);
         }
-        // console.log(project);
       });
     UI.initAddProjectButton();
   }
@@ -35,17 +32,20 @@ import Storage from './storage';export default class UI {
     Storage.getTodoList()
       .getProject(projectName)
       .getTasks()
-      .forEach((task) => UI.createTask(task.name, task.dueDate));    if (projectName !== 'Today' && projectName !== 'This week') {
+      .forEach((task) => UI.createTask(task.name, task.dueDate));
+
+    if (projectName !== 'Today' && projectName !== 'This week') {
       UI.initAddTaskButtons();
     }
-  }  
+  }
 
   static loadProjectContent(projectName) {
     const projectPreview = document.getElementById('project-preview');
     projectPreview.innerHTML = `
       <h1 id="project-name">${projectName}</h1>
       <div id="tasks-list" class="tasks-list"></div>
-    `;    if (projectName !== 'Today' && projectName !== 'This week') {
+    `;
+    if (projectName !== 'Today' && projectName !== 'This week') {
       projectPreview.innerHTML = `
       <form action="" class="d-flex">
         <input
@@ -61,12 +61,11 @@ import Storage from './storage';export default class UI {
       <div id="tasks-list" class="tasks-list mt-3"></div>
       `;
     }
-    // console.log(projectPreview);
     UI.loadTasks(projectName);
   }
 
   static loadProject(name, index) {
-    let str = `<div class="d-flex justify-content-between button-project" data-project-button>
+    const str = `<div class="d-flex justify-content-between button-project" data-project-button>
     <div class="left-project-panel">
     <i class="fas fa-tasks mr-2"></i>
     <span value=${index}>${name}</span>
@@ -76,12 +75,12 @@ import Storage from './storage';export default class UI {
     </div>
     </div>
     `;
-    return str
+    return str;
   }
 
   static createProject(projects) {
     const userProjects = document.getElementById('projects-list');
-    userProjects.innerHTML = projects
+    userProjects.innerHTML = projects;
     UI.initProjectButtons();
   }
 
@@ -101,7 +100,6 @@ import Storage from './storage';export default class UI {
         </div>
       </button>
     `;
-    console.log(taskList);
     UI.initTaskButton();
   }
 
@@ -128,18 +126,26 @@ import Storage from './storage';export default class UI {
 
   static initAddProjectButton() {
     const addProjectButton = document.getElementById('button-add-project');
-    const addProjectInput = document.getElementById('input-add-project');    addProjectInput.addEventListener('keypress', UI.handleAddProjectInput);
+    const addProjectInput = document.getElementById('input-add-project');
+
+    addProjectInput.addEventListener('keypress', UI.handleAddProjectInput);
     addProjectButton.addEventListener('click', UI.createProject);
   }
 
   static addProject() {
     const addProjectInput = document.getElementById('input-add-project');
-    const projectName = addProjectInput.value;    // if (projectName === '') {
-    //   alert("Project name can't be empty");
-    // }    // if (Storage.getTodoList().contains(projectName)) {
-    //   addProjectInput.value = '';
-    //   alert('Project names must be different');
-    // }    Storage.addProject(new Project(projectName));
+    const projectName = addProjectInput.value;
+
+    if (projectName === '') {
+      alert("Project name can't be empty");
+    }
+
+    if (Storage.getTodoList().contains(projectName)) {
+      addProjectInput.value = '';
+      alert('Project names must be different');
+    }
+
+    Storage.addProject(new Project(projectName));
     UI.createProject(projectName);
   }
 
@@ -152,7 +158,9 @@ import Storage from './storage';export default class UI {
     const allProjectsButton = document.getElementById('button-all-projects');
     const todayProjectsButton = document.getElementById('button-today-projects');
     const weekProjectsButton = document.getElementById('button-week-projects');
-    const projectButtons = document.querySelectorAll('[data-project-button]');    allProjectsButton.addEventListener('click', UI.openAllTasks);
+    const projectButtons = document.querySelectorAll('[data-project-button]');
+
+    allProjectsButton.addEventListener('click', UI.openAllTasks);
     todayProjectsButton.addEventListener('click', UI.openTodayTasks);
     weekProjectsButton.addEventListener('click', UI.openWeekTasks);
     projectButtons.forEach((projectButton) => projectButton.addEventListener('click', UI.handleProjectButton));
@@ -175,18 +183,21 @@ import Storage from './storage';export default class UI {
   static handleProjectButton(e) {
     e.preventDefault();
     const projectName = this.children[0].children[1].textContent;
-    window.activeProject = this.children[0].children[1].getAttribute("value")
-    console.log(window.activeProject)
+    window.activeProject = this.children[0].children[1].getAttribute('value');
+    // console.log(window.activeProject);
     if (e.target.classList.contains('fa-times')) {
       UI.deleteProject(projectName, this);
       return;
-    }    UI.openProject(projectName, this);
+    }
+    UI.openProject(projectName, this);
   }
 
   static openProject(projectName, projectButton) {
     const defaultProjectButtons = document.querySelectorAll('.button-default-project');
     const projectButtons = document.querySelectorAll('.button-project');
-    const buttons = [...defaultProjectButtons, ...projectButtons];    buttons.forEach((button) => button.classList.remove('active'));
+    const buttons = [...defaultProjectButtons, ...projectButtons];
+
+    buttons.forEach((button) => button.classList.remove('active'));
     projectButton.classList.add('active');
     UI.loadProjectContent(projectName);
   }
@@ -200,14 +211,18 @@ import Storage from './storage';export default class UI {
 
   static initAddTaskButtons() {
     const addTaskButton = document.getElementById('button-add-task');
-    const addTaskInput = document.getElementById('input-add-task');    addTaskButton.addEventListener('click', UI.addTask);
+    const addTaskInput = document.getElementById('input-add-task');
+
+    addTaskButton.addEventListener('click', UI.addTask);
     addTaskInput.addEventListener('keypress', UI.handleAddTaskInput);
   }
 
   static addTask() {
     const projectName = document.getElementById('tasks-list');
     const addTaskInput = document.getElementById('input-add-task');
-    const taskName = addTaskInput.value;    Storage.addTask(projectName, new Task(taskName));
+    const taskName = addTaskInput.value;
+
+    Storage.addTask(projectName, new Task(taskName));
     UI.createTask(taskName, 'No Date');
   }
 
@@ -215,29 +230,35 @@ import Storage from './storage';export default class UI {
     if (e.key === 'Enter') UI.addTask();
   }
 
-  static initTaskButton() {    const taskButtons = document.querySelectorAll('[data-task-button]');
+  static initTaskButton() {
+    const taskButtons = document.querySelectorAll('[data-task-button]');
     const taskNameInputs = document.querySelectorAll('[data-input-task-name]');
-    const dueDateInputs = document.querySelectorAll('[data-input-due-date]');    taskButtons.forEach((taskButton) => taskButton.addEventListener('click', UI.handleTaskButton));
+    const dueDateInputs = document.querySelectorAll('[data-input-due-date]');
+
+    taskButtons.forEach((taskButton) => taskButton.addEventListener('click', UI.handleTaskButton));
     taskNameInputs.forEach((taskNameInput) => taskNameInput.addEventListener('keypress', UI.renameTask));
     dueDateInputs.forEach((dueDateInput) => dueDateInput.addEventListener('change', UI.setTaskDate));
   }
 
   static handleTaskButton(e) {
     e.preventDefault();
-    window.activeProject =
+    window.activeProject = this.children[0].children[1].getAttribute('value');
     e.preventDefault();
     if (e.target.classList.contains('fa-circle')) {
       UI.setTaskCompleted(this);
       return;
     }
+
     if (e.target.classList.contains('fa-times')) {
       UI.deleteTask(this);
       return;
     }
+
     if (e.target.classList.contains('task-content')) {
       UI.openRenameInput(this);
       return;
     }
+
     if (e.target.classList.contains('due-date')) {
       UI.openSetDateInput(this);
     }
@@ -245,31 +266,38 @@ import Storage from './storage';export default class UI {
 
   static setTaskCompleted(taskButton) {
     const projectName = document.getElementById('project-name').textContent;
-    const taskName = taskButton.children[0].children[1].textContent;    if (projectName === 'Today' || projectName === 'This week') {
+    const taskName = taskButton.children[0].children[1].textContent;
+
+    if (projectName === 'Today' || projectName === 'This week') {
       const mainProjectName = taskName.split('(')[1].split(')')[0];
       Storage.deleteTask(mainProjectName, taskName);
     }
     Storage.deleteTask(projectName, taskName);
     UI.clearTasks();
     UI.loadTasks(projectName);
-  }  
+  }
 
   static deleteTask(taskButton) {
     const projectName = document.getElementById('project-name').textContent;
-    const taskName = taskButton.children[0].children[1].textContent;    if (projectName === 'Today' || projectName === 'This week') {
+    const taskName = taskButton.children[0].children[1].textContent;
+
+    if (projectName === 'Today' || projectName === 'This week') {
       const mainProjectName = taskName.split('(')[1].split(')')[0];
       Storage.deleteTask(mainProjectName, taskName);
     }
     Storage.deleteTask(projectName, taskName);
     UI.clearTasks();
     UI.loadTasks(projectName);
-  }  
+  }
 
   static renameTask(e) {
     e.preventDefault();
-    if (e.key !== 'Enter') return;    const projectName = document.getElementById('project-name').textContent;
+    if (e.key !== 'Enter') return;
+    const projectName = document.getElementById('project-name').textContent;
     const taskName = this.previousElementSibling.textContent;
-    const newTaskName = this.value;    if (projectName === 'Today' || projectName === 'This week') {
+    const newTaskName = this.value;
+
+    if (projectName === 'Today' || projectName === 'This week') {
       const mainProjectName = taskName.split('(')[1].split(')')[0];
       const mainTaskName = taskName.split(' ')[0];
       Storage.renameTask(
@@ -287,15 +315,19 @@ import Storage from './storage';export default class UI {
 
   static openSetDateInput(taskButton) {
     const dueDate = taskButton.children[1].children[0];
-    const dueDateInput = taskButton.children[1].children[1];    dueDate.classList.add('active');
+    const dueDateInput = taskButton.children[1].children[1];
+
+    dueDate.classList.add('active');
     dueDateInput.classList.add('active');
-  }  
+  }
 
   static setTaskDate() {
     const taskButton = this.parentNode.parentNode;
-    const projectName = document.getElementById('project-name').textContent;
-    const taskName = taskButton.children[0].children[1].textContent;
-    const newDueDate = format(new Date(this.value), 'dd/MM/yyyy');    if (projectName === 'Today' || projectName === 'This week') {
+    const projectName = document.getElementById('project-name');
+    const taskName = taskButton.children[0].children[1];
+    const newDueDate = format(new Date(this.value), 'dd/MM/yyyy');
+
+    if (projectName === 'Today' || projectName === 'This week') {
       const mainProjectName = taskName.split('(')[1].split(')')[0];
       const mainTaskName = taskName.split(' (')[0];
       Storage.setTaskDate(projectName, taskName, newDueDate);
