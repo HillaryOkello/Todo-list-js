@@ -28,10 +28,6 @@ The web page consists of default projects All, Today and This week. Users are al
 * [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
 * [Webpack](https://en.wikipedia.org/wiki/Webpack)
 
-<!-- ## Live Demo
-
-[Live Demo Link](https://hillaryokello.github.io/Restaurant-page/) -->
-
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
