@@ -28,15 +28,21 @@ export default class UI {
     UI.initAddProjectButton();
   }
 
-  static loadTasks(projectName) {
-    Storage.getTodoList()
-      .getProject(projectName)
-      .getTasks()
-      .forEach((task) => UI.createTask(task.name, task.dueDate));
+  static loadTasks() {
+    let taskList = '';
+    // Storage.getTodoList()
+    //   .getProject(projectName)
+    //   .getTasks()
+    //   .forEach((task) => UI.createTask(task.name, task.dueDate));
+    console.log('yo tasks: ', Storage.getTodoList().projects[window.activeProject].tasks);
+    Storage.getTodoList().projects[window.activeProject].tasks.forEach((task) => {
+      taskList = taskList.concat(UI.loadTask(task.name, task.dueDate));
+      UI.createTask(taskList);
+    });
 
-    if (projectName !== 'Today' && projectName !== 'This week') {
-      UI.initAddTaskButtons();
-    }
+    // if (projectName !== 'Today' && projectName !== 'This week') {
+    //   UI.initAddTaskButtons();
+    // }
   }
 
   static loadProjectContent(projectName) {
@@ -61,7 +67,7 @@ export default class UI {
       <div id="tasks-list" class="tasks-list mt-3"></div>
       `;
     }
-    UI.loadTasks(projectName);
+    UI.loadTasks();
   }
 
   static loadProject(name, index) {
@@ -84,22 +90,27 @@ export default class UI {
     UI.initProjectButtons();
   }
 
-  static createTask(name, dueDate) {
+  static loadTask(name, dueDate) {
+    const str = `
+    <button class="button-task" data-task-button>
+      <div class="left-task-panel">
+        <i class="far fa-circle"></i>
+        <p class="task-content">${name}</p>
+        <input type="text" class="input-task-name"  data-input-task-name>
+      </div>
+      <div class="right-task-panel">
+        <p class="due-date" id="due-date">${dueDate}</p>
+        <input type="date" class="input-due-date"   data-input-due-date>
+        <i class="fas fa-times"></i>
+      </div>
+    </button>
+  `;
+    return str;
+  }
+
+  static createTask(tasks) {
     const taskList = document.getElementById('tasks-list');
-    taskList.innerHTML = `
-      <button class="button-task" data-task-button>
-        <div class="left-task-panel">
-          <i class="far fa-circle"></i>
-          <p class="task-content">${name}</p>
-          <input type="text" class="input-task-name"  data-input-task-name>
-        </div>
-        <div class="right-task-panel">
-          <p class="due-date" id="due-date">${dueDate}</p>
-          <input type="date" class="input-due-date"   data-input-due-date>
-          <i class="fas fa-times"></i>
-        </div>
-      </button>
-    `;
+    taskList.innerHTML = tasks;
     UI.initTaskButton();
   }
 
@@ -211,16 +222,21 @@ export default class UI {
 
   static initAddTaskButtons() {
     const addTaskButton = document.getElementById('button-add-task');
-    const addTaskInput = document.getElementById('input-add-task');
+    // const addTaskInput = document.getElementById('input-add-task');
 
     addTaskButton.addEventListener('click', UI.addTask);
-    addTaskInput.addEventListener('keypress', UI.handleAddTaskInput);
+    // addTaskInput.addEventListener('keypress', UI.handleAddTaskInput);
   }
 
-  static addTask() {
+  static addTask(e) {
+    e.preventDefault();
     const projectName = document.getElementById('tasks-list');
     const addTaskInput = document.getElementById('input-add-task');
     const taskName = addTaskInput.value;
+    console.log(taskName);
+    const todoList = Storage.getTodoList();
+    todoList.projects[window.activeProject].tasks.push({ name: taskName, dueDate: '' });
+    Storage.saveTodoList(todoList);
 
     Storage.addTask(projectName, new Task(taskName));
     UI.createTask(taskName, 'No Date');
@@ -274,7 +290,7 @@ export default class UI {
     }
     Storage.deleteTask(projectName, taskName);
     UI.clearTasks();
-    UI.loadTasks(projectName);
+    UI.loadTasks();
   }
 
   static deleteTask(taskButton) {
@@ -287,7 +303,7 @@ export default class UI {
     }
     Storage.deleteTask(projectName, taskName);
     UI.clearTasks();
-    UI.loadTasks(projectName);
+    UI.loadTasks();
   }
 
   static renameTask(e) {
@@ -310,7 +326,7 @@ export default class UI {
       Storage.renameTask(projectName, taskName, newTaskName);
     }
     UI.clearTasks();
-    UI.loadTasks(projectName);
+    UI.loadTasks();
   }
 
   static openSetDateInput(taskButton) {
@@ -341,6 +357,6 @@ export default class UI {
       Storage.setTaskDate(projectName, taskName, newDueDate);
     }
     UI.clearTasks();
-    UI.loadTasks(projectName);
+    UI.loadTasks();
   }
 }
