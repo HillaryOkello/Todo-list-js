@@ -30,19 +30,12 @@ export default class UI {
 
   static loadTasks() {
     let taskList = '';
-    // Storage.getTodoList()
-    //   .getProject(projectName)
-    //   .getTasks()
-    //   .forEach((task) => UI.createTask(task.name, task.dueDate));
-    console.log('yo tasks: ', Storage.getTodoList().projects[window.activeProject].tasks);
-    Storage.getTodoList().projects[window.activeProject].tasks.forEach((task) => {
+    // console.log('yo tasks: ', Storage.getTodoList().projects[window.activeProject].tasks);
+    Storage.getTodoList()
+      .getProjects().forEach((task) => {
       taskList = taskList.concat(UI.loadTask(task.name, task.dueDate));
       UI.createTask(taskList);
     });
-
-    // if (projectName !== 'Today' && projectName !== 'This week') {
-    //   UI.initAddTaskButtons();
-    // }
   }
 
   static loadProjectContent(projectName) {
@@ -110,7 +103,7 @@ export default class UI {
 
   static createTask(tasks) {
     const taskList = document.getElementById('tasks-list');
-    taskList.innerHTML = tasks;
+    taskList.innerHTML = tasks
     UI.initTaskButton();
   }
 
@@ -161,7 +154,7 @@ export default class UI {
   }
 
   static handleAddProjectInput(e) {
-    // e.preventDefault();
+    e.preventDefault();
     if (e.key === 'Enter') UI.addProject();
   }
 
@@ -195,7 +188,6 @@ export default class UI {
     e.preventDefault();
     const projectName = this.children[0].children[1].textContent;
     window.activeProject = this.children[0].children[1].getAttribute('value');
-    // console.log(window.activeProject);
     if (e.target.classList.contains('fa-times')) {
       UI.deleteProject(projectName, this);
       return;
@@ -222,23 +214,22 @@ export default class UI {
 
   static initAddTaskButtons() {
     const addTaskButton = document.getElementById('button-add-task');
-    // const addTaskInput = document.getElementById('input-add-task');
+    const addTaskInput = document.getElementById('input-add-task');
 
-    addTaskButton.addEventListener('click', UI.addTask);
-    // addTaskInput.addEventListener('keypress', UI.handleAddTaskInput);
+    addTaskButton.addEventListener('click', UI.addTask());
+    addTaskInput.addEventListener('keypress', UI.handleAddTaskInput);
   }
 
   static addTask(e) {
     e.preventDefault();
-    const projectName = document.getElementById('tasks-list');
     const addTaskInput = document.getElementById('input-add-task');
     const taskName = addTaskInput.value;
-    console.log(taskName);
     const todoList = Storage.getTodoList();
     todoList.projects[window.activeProject].tasks.push({ name: taskName, dueDate: '' });
     Storage.saveTodoList(todoList);
 
-    Storage.addTask(projectName, new Task(taskName));
+    console.log('the button woks');
+    Storage.addTask(window.activeProject, new Task(taskName));
     UI.createTask(taskName, 'No Date');
   }
 

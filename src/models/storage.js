@@ -45,7 +45,7 @@ export default class Storage {
     const todoList = Storage.getTodoList();
     todoList.projects[window.activeProject].tasks.push(taskName);
 
-    // todoList.getProject(projectName)
+    todoList.getProject(projectName)
     Storage.saveTodoList(todoList);
   }
 
