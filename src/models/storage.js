@@ -12,6 +12,7 @@ export default class Storage {
       new TodoList(),
       JSON.parse(localStorage.getItem('todoList')),
     );
+    // const projects = JSON.parse(localStorage.projects || '{ "Default": [] }');
 
     todoList.setProjects(
       todoList
@@ -25,7 +26,6 @@ export default class Storage {
         project.getTasks().map((task) => Object.assign(new Task(), task)),
       ));
 
-    console.log(todoList);
     return todoList;
   }
 
@@ -41,11 +41,11 @@ export default class Storage {
     Storage.saveTodoList(todoList);
   }
 
-  static addTask(taskName, task) {
+  static addTask(taskName) {
     const todoList = Storage.getTodoList();
     todoList.projects[window.activeProject].tasks.push(taskName);
 
-    todoList.getProject(projectName)
+    // todoList.getProject(projectName);
     Storage.saveTodoList(todoList);
   }
 
