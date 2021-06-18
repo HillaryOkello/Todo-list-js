@@ -1,28 +1,15 @@
-// import {
-//   projects, setProject, addTodo, Storage,
-// } from '../src/models/storage';
 import Project from '../src/models/projects';
-import Task from '../src/models/task';
-import Storage from '../src/models/storage';
-import TodoList from '../src/models/List';
 
-test('Retrieve default project list', () => {
-  expect(Storage.getTodoList().getProjects()).toEqual({ name: 'All', tasks: [] }, { name: 'Today', tasks: [] }, { name: 'This week', tasks: [] });
+test('Should return project object with the given arguments including title and task', () => {
+  const project = new Project('My Project', []);
+  expect(project.name).toBe('My Project');
+  expect(project.tasks).toStrictEqual([]);
 });
 
-test('Add new project', () => {
-  Storage.addProject('New Project');
-  expect(Project).toEqual({ Default: [], 'New Project': [] });
-});
-
-test('Retrieve Project todos', () => {
-  TodoList.setProject('New Project');
-  const todo = new Task(
-    'Title',
-    'Description',
-    1,
-    '2021-02-18',
-  );
-  Storage.addTodo(todo);
-  expect(Project['New Project']).toEqual([todo]);
+test('should return an object with undefined name property and empty task array if it was not given any arguments', () => {
+  const project = new Project();
+  expect(project).toEqual({
+    name: undefined,
+    tasks: [],
+  });
 });
