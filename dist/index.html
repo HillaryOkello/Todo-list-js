@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="../src/assets/style.css">
+<title>Todo List
+</title>
+</head>
+<body>
+
+  <div id="content">
+    <nav class="navbar justify-content-center bg-primary">
+      <h1 class="text-white header">
+        Todo
+      </h1>
+    </nav>
+
+    <main class="page-content d-flex">
+      <nav class="nav-bar" id="nav">
+        <!-- Default projects -->
+        <div class="default-projects-list">
+          <button id="button-all-projects" class="btn-1 button-default-project p-1 m-2">
+            <i class="fas fa-inbox"></i>
+            All
+          </button>
+          <button class="btn-1 button-default-project p-1 m-2" id="button-today-projects">
+            <i class="fas fa-calendar-day"></i>
+            Today
+          </button>
+          <button class="btn-1 button-default-project p-1 m-2" id="button-week-projects">
+            <i class="fas fa-calendar-week"></i>
+            This week
+          </button>
+        </div>
+        <!-- User projects -->
+        <h1 class="projects-title p-2">Projects</h1>
+        <div class="projects-list" id="projects-list" project-list>
+        </div>
+        <form action="" data-new-project-form class="d-flex">
+          <input
+            id="input-add-project"
+            type="text"
+            class="new list"
+            placeholder="new project"
+          />
+          <button id="button-add-project" class="btn-1 create" aria-label="create new list">+</button>
+        </form>
+      </nav>
+
+      <!-- Todo -->
+      <div class="project-preview" id="project-preview"></div>
+
+    </main>
+  </div>
+
+<script src="main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+</body>
+</html>
