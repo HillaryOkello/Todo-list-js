@@ -34,12 +34,6 @@
   background-color: #fff;
 }
 
-.button-project.active,
-.button-default-project.active {
-  font-weight: bold;
-  background-color: #ccc;
-}
-
 .button-project:hover .right-project-panel {
   visibility: visible;
 }
@@ -51,7 +45,6 @@
 .btn-1 {
   cursor: pointer;
   background: 0;
-  border: 0;
   padding: 0;
   color: inherit;
   border: 1px solid transparent;

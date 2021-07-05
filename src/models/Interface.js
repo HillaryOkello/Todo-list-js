@@ -30,12 +30,12 @@ export default class UI {
 
   static loadTasks() {
     let taskList = '';
-    // console.log('yo tasks: ', Storage.getTodoList().projects[window.activeProject].tasks);
+    // console.log('yo tasks: ', Storage.getTodoList().getProjects());
     Storage.getTodoList()
       .getProjects().forEach((task) => {
-      taskList = taskList.concat(UI.loadTask(task.name, task.dueDate));
-      UI.createTask(taskList);
-    });
+        taskList = taskList.concat(UI.loadTask(task.name, task.dueDate));
+        UI.createTask(taskList);
+      });
   }
 
   static loadProjectContent(projectName) {
@@ -103,7 +103,7 @@ export default class UI {
 
   static createTask(tasks) {
     const taskList = document.getElementById('tasks-list');
-    taskList.innerHTML = tasks
+    taskList.innerHTML = tasks;
     UI.initTaskButton();
   }
 
@@ -139,15 +139,6 @@ export default class UI {
   static addProject() {
     const addProjectInput = document.getElementById('input-add-project');
     const projectName = addProjectInput.value;
-
-    if (projectName === '') {
-      alert("Project name can't be empty");
-    }
-
-    if (Storage.getTodoList().contains(projectName)) {
-      addProjectInput.value = '';
-      alert('Project names must be different');
-    }
 
     Storage.addProject(new Project(projectName));
     UI.createProject(projectName);
@@ -228,7 +219,6 @@ export default class UI {
     todoList.projects[window.activeProject].tasks.push({ name: taskName, dueDate: '' });
     Storage.saveTodoList(todoList);
 
-    console.log('the button woks');
     Storage.addTask(window.activeProject, new Task(taskName));
     UI.createTask(taskName, 'No Date');
   }
